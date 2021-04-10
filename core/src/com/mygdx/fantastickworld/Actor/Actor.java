@@ -1,6 +1,8 @@
 package com.mygdx.fantastickworld.Actor;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.fantastickworld.GraphicsObj.GraphicsObj;
 import com.mygdx.fantastickworld.Tools.Circle;
 import com.mygdx.fantastickworld.Tools.Point2D;
@@ -24,4 +26,5 @@ public abstract class  Actor extends GraphicsObj {
     public void setDirection(Point2D dir){
         direction = dir;
     }
+
 }

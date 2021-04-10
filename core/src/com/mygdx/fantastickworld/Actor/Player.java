@@ -8,16 +8,16 @@ import com.mygdx.fantastickworld.Tools.Point2D;
 public class Player extends Actor {
 
     private int score;
-    private float heaith;
+    private float health;
 
-    public Player(Texture img, Point2D position, float speed, float R, float heaith) {
+    public Player(Texture img, Point2D position, float speed, float R, float health) {
         super(img, position, speed, R);
-        this.heaith = heaith;
+        this.health = health;
     }
 
     @Override
-    public void draw(SpriteBatch knightBatch) {
-        knightBatch.draw(img, position.getX()-R,position.getY()-R, 200,200);
+    public void draw(SpriteBatch batch) {
+        batch.draw(img, position.getX()-R,position.getY()-R, 200,200);
     }
 
     @Override
