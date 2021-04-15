@@ -22,11 +22,10 @@ public class Player extends Actor {
 
     @Override
     public void update() {
-        if (position.getX() + R > 4000) position.setX(4000 - R);
+        if (position.getX() + R > 3000) position.setX(3000 - R);
         if (position.getX() - R < 0) position.setX(R);
-        if (position.getY() + R > 4000) position.setY(4000 - R);
+        if (position.getY() + R > 3000) position.setY(3000 - R);
         if (position.getY() - R < 0) position.setY(R);
-
         position.add(direction.getX() * speed, direction.getY() * speed);
     }
 }

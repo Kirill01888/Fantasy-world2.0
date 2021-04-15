@@ -4,21 +4,27 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
+import com.mygdx.fantastickworld.Actor.Bullet;
 import com.mygdx.fantastickworld.Actor.Player;
 import com.mygdx.fantastickworld.Main;
+import com.mygdx.fantastickworld.Tools.BulletGenerator;
 import com.mygdx.fantastickworld.Tools.Joystick;
+import com.mygdx.fantastickworld.Tools.Joystick2;
 import com.mygdx.fantastickworld.Tools.Point2D;
 
 public class GameSc implements Screen {
 
     public Joystick joystick;
-    public Player player;
+    public Joystick2 joystick2;
+    public static Player player;
     public Main main;
-    public Point2D point;
+    public static com.badlogic.gdx.utils.Array<Bullet> bullets;
+    public BulletGenerator bulgen;
 
     public GameSc(Main main) {
         this.main = main;
@@ -81,7 +87,7 @@ public class GameSc implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Main.batch.begin();
-        Main.batch.draw(Main.place, 0, 0, 4000, 4000);
+        drawMap(Main.batch);
         GameRender(Main.batch);
         Main.batch.end();
         Main.camera.update();
@@ -116,25 +122,30 @@ public class GameSc implements Screen {
     }
 
     public void multitouch(float x, float y, boolean isDownTouch, int pointer) {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             joystick.update(x, y, isDownTouch, pointer);
+            joystick2.update(x,y,isDownTouch,pointer);
         }
     }
 
     public void loadActors() {
+        bullets = new Array<>();
+        bulgen = new BulletGenerator();
         player = new Player(Main.knight, new Point2D(Main.WIDTH / 2, Main.HEIGHT / 2), 10, Main.HEIGHT / 20, 20);
-        point = new Point2D(player.position.x / 4,player.position.y / 4 + 50);
-        joystick = new Joystick(Main.circle, Main.actor, Main.HEIGHT / 3,point);
+        joystick = new Joystick(Main.circle, Main.actor, Main.HEIGHT / 3, player);
+        joystick2 = new Joystick2(Main.circle,Main.actor,Main.HEIGHT / 3,player);
     }
 
     public void GameUpdate() {
         player.setDirection(joystick.getDir());
         player.update();
+        bulgen.update(joystick2);
     }
 
     public void GameRender(SpriteBatch batch) {
         player.draw(batch);
-        joystick.draw(batch,player);
+        joystick.draw(batch, player);
+        joystick2.draw2(batch,player);
     }
 
     public void CameraUpdate() {
@@ -143,5 +154,17 @@ public class GameSc implements Screen {
         position.y = player.position.y;
         Main.camera.position.set(position);
         Main.camera.update();
+    }
+
+    public void drawMap(SpriteBatch batch){
+        batch.draw(Main.place, -3000, 0, 3000, 3000);
+        batch.draw(Main.place,  3000, 0, 3000, 3000);
+        batch.draw(Main.place, -3000, -3000, 3000, 3000);
+        batch.draw(Main.place, 0, -3000, 3000, 3000);
+        batch.draw(Main.place, -3000, 3000, 3000, 3000);
+        batch.draw(Main.place, 0, 3000, 3000, 3000);
+        batch.draw(Main.place, 3000, 3000, 3000, 3000);
+        batch.draw(Main.place, 3000, -3000, 3000, 3000);
+        batch.draw(Main.place, 0, 0, 3000, 3000);
     }
 }

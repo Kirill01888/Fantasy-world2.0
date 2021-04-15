@@ -2,13 +2,9 @@ package com.mygdx.fantastickworld.Tools;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
-import com.mygdx.fantastickworld.Actor.Actor;
 import com.mygdx.fantastickworld.Actor.Player;
-import com.mygdx.fantastickworld.Main;
-import com.mygdx.fantastickworld.screen.GameSc;
 
-public class Joystick {
+public class Joystick2 {
 
     private static Texture CircleImg, StickImg;
     private static Circle CircleBounds, StickBounds;
@@ -17,19 +13,20 @@ public class Joystick {
     private int pointer = -1;
     private Point2D point2D;
 
-    public Joystick(Texture cimg, Texture simg, float Size, Player player) {
+    public Joystick2(Texture cimg, Texture simg, float Size,Player player) {
         CircleImg = cimg;
         StickImg = simg;
         Rcircle = Size / 2;
         Rstick = Rcircle / 2;
-        CircleBounds = new Circle(new Point2D(player.position.x / 4,player.position.y / 4 + 50), Rcircle);
-        StickBounds = new Circle(new Point2D(player.position.x / 4,player.position.y / 4 + 50), Rstick);
+        CircleBounds = new Circle(new Point2D( player.position.x / 4 + 800 * 2,player.position.y / 4 ), Rcircle);
+        StickBounds = new Circle(new Point2D( player.position.x / 4 + 800 * 2 + 25,player.position.y / 4 + 50), Rstick);
         direction = new Point2D(0, 0);
     }
 
-    public void draw(SpriteBatch batch,Player player) {
-        batch.draw(CircleImg, player.position.x - 800 - Rcircle , player.position.y - 375 - Rcircle , Rcircle * 2, Rcircle * 2);
-        batch.draw(StickImg, player.position.x - 900 - (Rstick * 3) + StickBounds.pos.getX() , player.position.y - 375 - (Rstick * 3) + StickBounds.pos.getY(), Rstick * 2, Rstick * 2);
+    public void draw2(SpriteBatch batch, Player player){
+        batch.draw(CircleImg, player.position.x  + 750 - Rcircle, player.position.y - 378  - Rcircle , Rcircle * 2, Rcircle * 2);
+        batch.draw(StickImg, player.position.x  + 760 * 3  + (Rstick * 2) - StickBounds.pos.getX() + 100, player.position.y - 100 - Rstick * 2 - StickBounds.pos.getY() - 25, Rstick * 2, Rstick * 2);
+
     }
 
     public void update(float x, float y, boolean isDownTouch, int pointer) {
